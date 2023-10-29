@@ -1,24 +1,25 @@
 import { Injectable } from '@nestjs/common';
-import { OpenAIClient } from '@platohq/nestjs-openai';
-import {
-  ChatCompletionRequestMessage,
-  CreateModerationRequestInput,
-} from 'openai';
+import OpenAI from 'openai';
+import { MessageObjectOpenAI } from './types/message';
 
 @Injectable()
 export class OpenAIService {
-  constructor(private readonly openAIClient: OpenAIClient) {}
+  private openAI: OpenAI;
 
-  async createChatCompletion(messages: ChatCompletionRequestMessage[]) {
+  constructor() {
+    this.openAI = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+  }
+
+  async createChatCompletion(messages: MessageObjectOpenAI[]) {
     try {
-      const { data } = await this.openAIClient.createChatCompletion({
+      return await this.openAI.chat.completions.create({
+        messages,
         model: 'gpt-3.5-turbo',
         max_tokens: 1000,
         temperature: 0.8,
-        messages,
       });
-
-      return data;
     } catch (error) {
       if (error.response) {
         console.log(error.response.status);
@@ -29,13 +30,11 @@ export class OpenAIService {
     }
   }
 
-  async createModeration(input: CreateModerationRequestInput) {
+  async createModeration(input: string) {
     try {
-      const { data } = await this.openAIClient.createModeration({
+      return await this.openAI.moderations.create({
         input,
       });
-
-      return data;
     } catch (error) {
       if (error.response) {
         console.log(error.response.status);
