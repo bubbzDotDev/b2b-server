@@ -14,7 +14,6 @@ $ npm install
 
 ## Add .env file
 - Copy OpenAI API Key from your account @ [https://platform.openai.com/account/api-keys](https://platform.openai.com/account/api-keys)
-- Copy AI21 Studio API Key from your account @ [https://studio.ai21.com/account](https://studio.ai21.com/account)
 - Create a file at the root of the project named `.env`
 - Add the following to the `.env` file and paste your values after the equal signs
 - Locally, the `CLIENT_ORIGIN` variables will both be `http://localhost:5173` and `PORT` will be `3000`
@@ -22,7 +21,6 @@ $ npm install
 ```bash
 # API Keys
 OPENAI_API_KEY=
-AI21_API_KEY=
 
 # Origins
 CLIENT_ORIGIN=http://localhost:5173
@@ -31,6 +29,9 @@ CLIENT_ORIGIN_2=http://localhost:5173
 # Ports
 PORT=3000
 ```
+
+## Note
+You will notice a directory with commented out code at `src/ai21`. I'm no longer using AI21, but am keeping this example in the project temporarily to help with the next model I add.
 
 ## Running the app
 
